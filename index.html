@@ -1,0 +1,344 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAC</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1a1330, #0b0914);
+  color: #e6dcff;
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+
+.banner {
+  text-align: center;
+}
+
+.banner h1 {
+  font-size: 40px;
+  letter-spacing: 12px;
+  font-weight: 300;
+  margin: 0;
+}
+
+
+.definition {
+  font-size: 10px;
+  opacity: 0.45;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.definition span {
+  display: block;
+  margin: 2px 0;
+}
+
+.definition a {
+  color: #cfc1ff;
+  text-decoration: none;
+  margin: 2px 4px;
+  font-weight: 400;
+  font-size: 10px;
+  opacity: 0.5;
+  transition: 0.3s;
+}
+
+.definition a:hover {
+  opacity: 1;
+}
+
+.terminal {
+  position: relative;
+  border-radius: 22px;
+  padding: 20px;
+  height: 55vh;
+  display: flex;
+  flex-direction: column;
+
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(24px);
+
+  border: 1px solid rgba(180,150,255,0.18);
+}
+
+
+.product .imageWrap {
+  flex-grow: 1;             
+  display: flex;
+  align-items: center;       
+  justify-content: center;   
+}
+
+.imageWrap img {
+  width: 220px;              
+  opacity: 0.85;
+  object-fit: contain;
+}
+
+.product h2,
+.product .meta,
+.product .controls {
+  margin-top: auto;
+}
+
+.product {
+  display: none;
+}
+
+.product.active {
+  display: block;
+}
+
+.product h2 {
+  font-size: 14px;
+  margin: 10px 0 6px;
+}
+
+.meta {
+  font-size: 10px;
+  opacity: 0.5;
+  line-height: 1.5;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.price {
+  font-size: 11px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(200,180,255,0.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.next {
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.next:hover {
+  opacity: 1;
+}
+
+/* FOOTER */
+.footer {
+  font-size: 10px;
+  opacity: 0.4;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* COMING SOON (centered + larger) */
+.comingSoon {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+
+  font-size: 64px;
+  letter-spacing: 12px;
+  font-weight: 300;
+
+  opacity: 0.04;
+  animation: fadePulse 6s infinite ease-in-out;
+
+  pointer-events: none;
+}
+
+@keyframes fadePulse {
+  0% { opacity: 0.02; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0.02; }
+}
+
+.fragranceOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10,8,20,0.65);
+  backdrop-filter: blur(30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.6s;
+}
+
+.fragranceOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.fragranceInner {
+  width: 80%;
+  max-width: 300px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(200,180,255,0.2);
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="banner">
+    <h1>LAC</h1>
+  </div>
+
+  <div class="definition">
+    <span>liminal → in-between / digital / soft space</span>
+    <span>abyss → depth / danger / demonic undertone</span>
+    <span>caress → intimacy / lingerie / softness</span>
+    <span>
+      <a href="#about">about</a> x 
+      <a href="#newsletter">newsletter</a>
+    </span>
+  </div>
+
+  <div class="terminal">
+
+    <div class="product active">
+      <div class="imageWrap">
+        <img src="https://axayacatl.neocities.org/images/162280%20(1).png">
+      </div>
+      <h2>01 / lattice bra v1</h2>
+      <div class="meta">
+        type: structure<br>
+        format: STL<br>
+        access: restricted
+      </div>
+      <div class="controls">
+        <div class="price">$120</div>
+        <div class="next" onclick="nextProduct()">next →</div>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="imageWrap">
+        <img src="https://axayacatl.neocities.org/images/162280%20(1).png">
+      </div>
+      <h2>02 / corset generator</h2>
+      <div class="meta">
+        type: system<br>
+        format: parametric<br>
+        access: restricted
+      </div>
+      <div class="controls">
+        <div class="price">$240</div>
+        <div class="next" onclick="nextProduct()">next →</div>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="imageWrap">
+        <img src="https://axayacatl.neocities.org/images/162280%20(1).png">
+      </div>
+      <h2>03 / wet mesh textures</h2>
+      <div class="meta">
+        type: material<br>
+        format: digital<br>
+        access: restricted
+      </div>
+      <div class="controls">
+        <div class="price">$80</div>
+        <div class="next" onclick="nextProduct()">next →</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>home</span>
+    <span>archive</span>
+    <span onclick="openFragrance()">fragrance</span>
+    <span>info</span>
+  </div>
+
+  <div class="comingSoon">COMING SOON</div>
+
+</div>
+
+<div class="fragranceOverlay" id="fragranceOverlay" onclick="closeFragrance()">
+  <div class="fragranceInner" onclick="event.stopPropagation()">
+    <div id="fragranceStage">initiate</div>
+  </div>
+</div>
+
+<script>
+let index = 0;
+const products = document.querySelectorAll(".product");
+
+function nextProduct() {
+  products[index].classList.remove("active");
+  index = (index + 1) % products.length;
+  products[index].classList.add("active");
+}
+
+function openFragrance() {
+  document.getElementById("fragranceOverlay").classList.add("active");
+
+  const text = document.getElementById("fragranceStage");
+  text.innerHTML = "initializing...";
+
+  setTimeout(() => {
+    text.innerHTML = "top note: sterile lilac";
+  }, 1500);
+
+  setTimeout(() => {
+    text.innerHTML = "heart: synthetic skin";
+  }, 3500);
+
+  setTimeout(() => {
+    text.innerHTML = "base: warm plastic / soft void";
+  }, 5500);
+}
+
+function closeFragrance() {
+  document.getElementById("fragranceOverlay").classList.remove("active");
+
+  setTimeout(() => {
+    document.getElementById("fragranceStage").innerHTML = "initiate";
+  }, 600);
+}
+</script>
+
+</body>
+</html>
