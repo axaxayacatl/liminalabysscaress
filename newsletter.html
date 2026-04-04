@@ -7,34 +7,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
 <style>
   body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     background: radial-gradient(circle at top, #1a1330, #0b0914);
-    font-family: 'Space Grotesk', sans-serif;
-    color: #e6dcff;
+    font-family:'Space Grotesk', sans-serif;
+    color:#e6dcff;
   }
-
   .newsletter-container {
-    text-align: center;
-    padding: 32px 24px;
-    border-radius: 20px;
+    text-align:center;
+    padding:32px 24px;
+    border-radius:20px;
     background: rgba(255,255,255,0.03);
     backdrop-filter: blur(24px);
     border: 1px solid rgba(180,150,255,0.18);
   }
-
   .newsletter-container label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 1px;
-    opacity: 0.6;
-    color: #cfc1ff;
-    margin-bottom: 6px;
+    display:block;
+    font-size:10px;
+    letter-spacing:1px;
+    opacity:0.6;
+    color:#cfc1ff;
+    margin-bottom:6px;
   }
-
   .newsletter-container input[type="email"] {
     background: rgba(200,180,255,0.05);
     border: 1px solid rgba(200,180,255,0.3);
@@ -46,54 +43,55 @@
     width:180px;
     backdrop-filter: blur(12px);
   }
-
-  .newsletter-container input[type="submit"] {
+  .newsletter-container .send-btn {
+    display:inline-block;
     margin-left:8px;
-    background: rgba(200,180,255,0.05);
-    border: 1px solid rgba(200,180,255,0.3);
-    color: #cfc1ff;
     padding:8px 12px;
     border-radius:20px;
     font-size:10px;
     cursor:pointer;
+    color:#cfc1ff;
+    border: 1px solid rgba(200,180,255,0.3);
+    background: rgba(200,180,255,0.05);
     transition:0.3s;
-    backdrop-filter: blur(12px);
   }
-
-  .newsletter-container input[type="submit"]:hover {
+  .newsletter-container .send-btn:hover {
     background: rgba(200,180,255,0.2);
-    color: #fff;
+    color:#fff;
   }
-
   .newsletter-container p {
     font-size:8px;
     opacity:0.3;
     margin-top:6px;
   }
-
-  .newsletter-container p a {
+  .newsletter-container input::-webkit-input-placeholder {
     color:#cfc1ff;
-    text-decoration:none;
-    opacity:0.5;
-    transition:0.3s;
   }
-
-  .newsletter-container p a:hover {
-    opacity:0.9;
-  }
-
 </style>
 </head>
 <body>
 
 <div class="newsletter-container">
-  <form action="liminalabysscaress@proton.me" method="post" enctype="text/plain">
-    <label for="email">access key → email</label>
-    <input type="email" name="email" id="email" placeholder="your email here" required>
-    <input type="submit" value="initiate">
-    <p>your email will go directly to Proton Mail</p>
-  </form>
+  <label for="email">access key → email</label>
+  <input type="email" id="email" placeholder="your email here" required>
+  <span class="send-btn" onclick="sendEmail()">initiate</span>
+  <p>clicking initiate will open your email client to send your access key</p>
 </div>
+
+<script>
+function sendEmail() {
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value.trim();
+  if(!email) {
+    alert('enter your email');
+    return;
+  }
+  const protonAddress = 'yourname@proton.me';
+  const subject = encodeURIComponent('LAC Newsletter Access Key');
+  const body = encodeURIComponent('subscribe: ' + email);
+  window.location.href = `mailto:${protonAddress}?subject=${subject}&body=${body}`;
+}
+</script>
 
 </body>
 </html>
