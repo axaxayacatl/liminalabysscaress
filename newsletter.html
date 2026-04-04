@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAC Newsletter</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #1a1330, #0b0914);
+    font-family: 'Space Grotesk', sans-serif;
+    color: #e6dcff;
+  }
+
+  .newsletter-container {
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(180,150,255,0.18);
+  }
+
+  .newsletter-container label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    color: #cfc1ff;
+    margin-bottom: 6px;
+  }
+
+  .newsletter-container input[type="email"] {
+    background: rgba(200,180,255,0.05);
+    border: 1px solid rgba(200,180,255,0.3);
+    color: #e6dcff;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size:10px;
+    outline:none;
+    width:180px;
+    backdrop-filter: blur(12px);
+  }
+
+  .newsletter-container input[type="submit"] {
+    margin-left:8px;
+    background: rgba(200,180,255,0.05);
+    border: 1px solid rgba(200,180,255,0.3);
+    color: #cfc1ff;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:10px;
+    cursor:pointer;
+    transition:0.3s;
+    backdrop-filter: blur(12px);
+  }
+
+  .newsletter-container input[type="submit"]:hover {
+    background: rgba(200,180,255,0.2);
+    color: #fff;
+  }
+
+  .newsletter-container p {
+    font-size:8px;
+    opacity:0.3;
+    margin-top:6px;
+  }
+
+  .newsletter-container p a {
+    color:#cfc1ff;
+    text-decoration:none;
+    opacity:0.5;
+    transition:0.3s;
+  }
+
+  .newsletter-container p a:hover {
+    opacity:0.9;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="newsletter-container">
+  <form action="liminalabysscaress@proton.me" method="post" enctype="text/plain">
+    <label for="email">access key → email</label>
+    <input type="email" name="email" id="email" placeholder="your email here" required>
+    <input type="submit" value="initiate">
+    <p>your email will go directly to Proton Mail</p>
+  </form>
+</div>
+
+</body>
+</html>
