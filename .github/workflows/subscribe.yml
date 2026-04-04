@@ -1,1 +1,25 @@
 
+name: Subscribe Email
+
+on:
+  repository_dispatch:
+    types: [subscribe_email]
+
+jobs:
+  save_email:
+    runs-on: ubuntu-latest
+    env:
+      GH_PAT: ${{ secrets.GH_PAT }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Append email to list
+        run: |
+          EMAIL="${{ github.event.client_payload.email }}"
+          echo "$EMAIL" >> subscribers.csv
+          git config user.name "LAC Ritual Bot"
+          git config user.email "liminalabysscaress@proton.me"
+          git add subscribers.csv
+          git commit -m "New subscriber: $EMAIL"
+          git push https://x-access-token:${GH_PAT}@github.com/axaxayacatl/liminalabysscaress.git
