@@ -91,12 +91,21 @@ body {
   justify-content: center;   
 }
 
-.imageWrap img {
-  width: 220px;              
-  opacity: 0.85;
-  object-fit: contain;
+.product .imageWrap {
+  width: 220px;
+  height: 220px;        
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.02); 
+  border-radius: 12px;  
 }
-
+.imageWrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;  
+  opacity: 0.85;
+}
 .product h2,
 .product .meta,
 .product .controls {
