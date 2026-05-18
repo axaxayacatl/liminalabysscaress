@@ -109,60 +109,50 @@ body {
 
 <script>
 const fragments = [
-  `INITIATE caress_sequence_v2
+`INITIATE caress_sequence_v2
 input: skin_temperature ~34.7°C
 WAIT 0.3s
 pulse: synthetic rhythm
 ABORT if signal != accepted`,
 
-  `LOAD interaction_loop_03
+`LOAD interaction_loop_03
 sensor: tactile membrane
 adjust: softness +0.2
 RECORD: ephemeral feedback
 TERMINATE sequence`,
 
-  `BEGIN liminal_encounter
+`BEGIN liminal_encounter
 touch: digital lattice
 delay: 0.5s
 repeat until: threshold_exceeded
 LOG: ritual residue`,
 
-  `SENSORY_FEED:
+`SENSORY_FEED:
 top_note: lilac-stasis
 heart_resonance: synthetic dermis
 base_signature: warm polymer / soft void
 OUTPUT: ephemeral trace`,
 
-  `SCENT_MATRIX: fragment
+`SCENT_MATRIX: fragment
 volatile: 0.72
 residual: 0.31
 perceived: intangible
 ARCHIVE: sensory echo`,
 
-  `AUDIO_WAVE:
+`AUDIO_WAVE:
 frequency: 432Hz
 amplitude: subtle
 texture: granular
 recorded: memory trace`
 ];
 
-let currentFragment = 0;
-const archiveStage = document.getElementById("archiveStage");
-
-function fadeFragment(text) {
-  archiveStage.style.opacity = 0;
-  setTimeout(() => {
-    archiveStage.innerHTML = text.replace(/\n/g,"<br>");
-    archiveStage.style.opacity = 1;
-  }, 300);
-}
-
-function nextFragment() {
-  currentFragment = (currentFragment + 1) % fragments.length;
-  fadeFragment(fragments[currentFragment]);
-}
-
-fadeFragment(fragments[currentFragment]);
+const container = document.getElementById('archiveContainer');
+fragments.forEach(fragment => {
+  const div = document.createElement('div');
+  div.className = 'archiveFragment';
+  div.textContent = fragment;
+  container.appendChild(div);
+});
 </script>
 </body>
 </html>
