@@ -178,16 +178,17 @@ body {
   opacity: 0.8;
   cursor: pointer;
   transition: 0.3s;
-  color: #cfc1ff;      
-  text-decoration: none; 
-  user-select: none;     
-  background: none;     
-  border: none;        
+  color: #e6dcff;     
+  text-decoration: none;
+  user-select: none;
+  background: none;
+  border: none;
   padding: 4px 8px;
 }
 
 .action-btn:hover {
   opacity: 1;
+  color: #cfc1ff;       
 }
 </style>
 </head>
@@ -265,9 +266,8 @@ body {
 
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:30px;">
       <div class="action-btn" onclick="openFragrance()">fragrance →</div>
-      <div class="action-btn">
-  <a href="https://axaxayacatl.github.io/liminalabysscaress/archive">archive →</a>
-</div>
+      <!-- Fixed archive button: removed <a>, use JS for navigation -->
+      <div class="action-btn" onclick="openArchive()">archive →</div>
     </div>
 
   </div>
@@ -328,7 +328,7 @@ function fadeText(newText) {
 }
 
 function openArchive() {
-  alert("Archive function not implemented yet.");
+  window.location.href = "https://axaxayacatl.github.io/liminalabysscaress/archive";
 }
 </script>
 
