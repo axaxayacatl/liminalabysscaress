@@ -13,17 +13,14 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   display: flex;
   justify-content: center;
-  overflow-x: hidden;
 }
 
 .container {
   width: 100%;
   max-width: 420px;
-  min-height: 100vh;
   padding: 28px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   gap: 20px;
 }
 
@@ -54,6 +51,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .archiveFragment {
@@ -61,25 +60,15 @@ body {
   font-size: 12px;
   line-height: 1.6;
   opacity: 0.85;
-  transition: opacity 0.5s;
+  white-space: pre-wrap;
 }
-
-.nextFragmentBtn {
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.3s;
-  align-self: flex-end;
-}
-.nextFragmentBtn:hover { opacity: 1; }
 
 .footer {
   font-size: 10px;
   opacity: 0.4;
   display: flex;
   justify-content: space-between;
-  margin-top: auto;
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -96,8 +85,53 @@ body {
   </div>
 
   <div class="archiveContainer">
-    <div id="archiveStage" class="archiveFragment">loading transcripts...</div>
-    <div class="nextFragmentBtn" onclick="nextFragment()">next fragment →</div>
+    <div class="archiveFragment">
+INITIATE caress_sequence_v2
+input: skin_temperature ~34.7°C
+WAIT 0.3s
+pulse: synthetic rhythm
+ABORT if signal != accepted
+    </div>
+
+    <div class="archiveFragment">
+LOAD interaction_loop_03
+sensor: tactile membrane
+adjust: softness +0.2
+RECORD: ephemeral feedback
+TERMINATE sequence
+    </div>
+
+    <div class="archiveFragment">
+BEGIN liminal_encounter
+touch: digital lattice
+delay: 0.5s
+repeat until: threshold_exceeded
+LOG: ritual residue
+    </div>
+
+    <div class="archiveFragment">
+SENSORY_FEED:
+top_note: lilac-stasis
+heart_resonance: synthetic dermis
+base_signature: warm polymer / soft void
+OUTPUT: ephemeral trace
+    </div>
+
+    <div class="archiveFragment">
+SCENT_MATRIX: fragment
+volatile: 0.72
+residual: 0.31
+perceived: intangible
+ARCHIVE: sensory echo
+    </div>
+
+    <div class="archiveFragment">
+AUDIO_WAVE:
+frequency: 432Hz
+amplitude: subtle
+texture: granular
+recorded: memory trace
+    </div>
   </div>
 
   <div class="footer">
@@ -106,53 +140,5 @@ body {
     <span>info</span>
   </div>
 </div>
-
-<script>
-const fragments = [
-`INITIATE caress_sequence_v2
-input: skin_temperature ~34.7°C
-WAIT 0.3s
-pulse: synthetic rhythm
-ABORT if signal != accepted`,
-
-`LOAD interaction_loop_03
-sensor: tactile membrane
-adjust: softness +0.2
-RECORD: ephemeral feedback
-TERMINATE sequence`,
-
-`BEGIN liminal_encounter
-touch: digital lattice
-delay: 0.5s
-repeat until: threshold_exceeded
-LOG: ritual residue`,
-
-`SENSORY_FEED:
-top_note: lilac-stasis
-heart_resonance: synthetic dermis
-base_signature: warm polymer / soft void
-OUTPUT: ephemeral trace`,
-
-`SCENT_MATRIX: fragment
-volatile: 0.72
-residual: 0.31
-perceived: intangible
-ARCHIVE: sensory echo`,
-
-`AUDIO_WAVE:
-frequency: 432Hz
-amplitude: subtle
-texture: granular
-recorded: memory trace`
-];
-
-const container = document.getElementById('archiveContainer');
-fragments.forEach(fragment => {
-  const div = document.createElement('div');
-  div.className = 'archiveFragment';
-  div.textContent = fragment;
-  container.appendChild(div);
-});
-</script>
 </body>
 </html>
