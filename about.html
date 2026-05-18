@@ -172,6 +172,18 @@ body {
   border: 1px solid rgba(200,180,255,0.2);
   text-align: center;
 }
+
+/* Buttons for fragrance/archive */
+.action-btn {
+  font-size: 12px;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.action-btn:hover {
+  opacity: 1;
+}
 </style>
 </head>
 
@@ -246,6 +258,11 @@ body {
       </div>
     </div>
 
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:30px;">
+      <div class="action-btn" onclick="openFragrance()">fragrance →</div>
+      <div class="action-btn" onclick="openArchive()">archive →</div>
+    </div>
+
   </div>
 
   <div class="footer">
@@ -275,34 +292,38 @@ function nextProduct() {
   products[index].classList.add("active");
 }
 
+let fragranceTimeouts = [];
 function openFragrance() {
-  document.getElementById("fragranceOverlay").classList.add("active");
+  const overlay = document.getElementById("fragranceOverlay");
+  overlay.classList.add("active");
+  fadeText("initializing...");
 
-  const text = document.getElementById("fragranceStage");
-  text.innerHTML = "initializing...";
-
-  setTimeout(() => {
-    text.innerHTML = "top note: sterile lilac";
-  }, 1500);
-
-  setTimeout(() => {
-    text.innerHTML = "heart: synthetic skin";
-  }, 3500);
-
-  setTimeout(() => {
-    text.innerHTML = "base: warm plastic / soft void";
-  }, 5500);
+  fragranceTimeouts.push(setTimeout(() => fadeText("top note: sterile lilac"), 1500));
+  fragranceTimeouts.push(setTimeout(() => fadeText("heart: synthetic skin"), 3500));
+  fragranceTimeouts.push(setTimeout(() => fadeText("base: warm plastic / soft void"), 5500));
 }
 
 function closeFragrance() {
-  document.getElementById("fragranceOverlay").classList.remove("active");
+  const overlay = document.getElementById("fragranceOverlay");
+  overlay.classList.remove("active");
+  fragranceTimeouts.forEach(t => clearTimeout(t));
+  fragranceTimeouts = [];
+  setTimeout(() => fadeText("initiate"), 600);
+}
 
+function fadeText(newText) {
+  const text = document.getElementById("fragranceStage");
+  text.style.opacity = 0;
   setTimeout(() => {
-    document.getElementById("fragranceStage").innerHTML = "initiate";
-  }, 600);
+    text.innerHTML = newText;
+    text.style.opacity = 1;
+  }, 300);
+}
+
+function openArchive() {
+  alert("Archive function not implemented yet.");
 }
 </script>
 
 </body>
 </html>
-
