@@ -1,335 +1,1135 @@
-<!DOCTYPE html>  
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LAC</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liminal Abyss Caress</title>
 
 <style>
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #1a1330, #0b0914);
-  color: #e6dcff;
-  font-family: 'Space Grotesk', sans-serif;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap');
+
+:root{
+  --bg:#e9e7ed;
+  --ink:#514d5d;
+  --muted:#9691a2;
+  --violet:#9c8eaf;
+  --line:rgba(112,101,132,.18);
+  --glow:rgba(174,157,204,.34);
+  --glass:rgba(250,248,253,.88)
 }
 
-.container {
-  width: 100%;
-  max-width: 420px;
-  height: 100vh;
-  padding: 28px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--ink)
 }
 
-.banner {
-  text-align: center;
+body{
+  font-family:Manrope,Arial,sans-serif;
+  overflow-x:hidden;
+  background:radial-gradient(ellipse at 50% 38%,#f7f5f9 0,#eeecf2 43%,#e3e0e9 100%)
 }
 
-.banner h1 {
-  font-size: 40px;
-  letter-spacing: 12px;
-  font-weight: 300;
-  margin: 0;
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:20;
+  opacity:.12;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(68,59,82,.12) 4px);
+  animation:flicker 7s infinite steps(1)
 }
 
-.definition {
-  font-size: 10px;
-  opacity: 0.45;
-  line-height: 1.8;
-  text-align: center;
+body:after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  z-index:19;
+  opacity:.12;
+  background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 48%,transparent 60%);
+  transform:translateX(-65%);
+  animation:scan 12s linear infinite
 }
 
-.definition span {
-  display: block;
-  margin: 2px 0;
+@keyframes flicker{
+  0%,96%,100%{opacity:.12}
+  97%{opacity:.18}
+  98%{opacity:.08}
+  99%{opacity:.15}
 }
 
-.definition a {
-  color: #cfc1ff;
-  text-decoration: none;
-  margin: 2px 4px;
-  font-weight: 400;
-  font-size: 10px;
-  opacity: 0.5;
-  transition: 0.3s;
+@keyframes scan{
+  to{transform:translateX(65%)}
 }
 
-.definition a:hover {
-  opacity: 1;
+.shell{
+  width:min(1180px,92vw);
+  margin:auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  padding:26px 0 24px;
+  position:relative
 }
 
-.terminal {
-  position: relative;
-  border-radius: 22px;
-  padding: 20px;
-  height: 55vh;
-  display: flex;
-  flex-direction: column;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(180,150,255,0.18);
+header{
+  height:112px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative
 }
 
-.product {
-  display: none;
+.logo{
+  height:160px;
+  max-width:min(55vw,360px);
+  object-fit:contain;
+  filter:drop-shadow(0 0 20px var(--glow))
 }
 
-.product.active {
-  display: block;
+.corner{
+  position:absolute;
+  right:2px;
+  top:50%;
+  transform:translateY(-50%);
+  font:10px 'DM Mono',monospace;
+  letter-spacing:.18em;
+  color:#91899e;
+  text-align:right
 }
 
-.product h2 {
-  font-size: 14px;
-  margin: 10px 0 6px;
+.top-nav{
+  position:fixed;
+  z-index:30;
+  top:22px;
+  left:max(4vw,calc((100vw - 1180px)/2));
+  display:flex;
+  gap:17px;
+  align-items:center
 }
 
-.meta {
-  font-size: 11px;
-  opacity: 0.6;
-  line-height: 1.7;
+.top-nav button{
+  border:0;
+  background:transparent;
+  padding:5px 0;
+  color:#81778f;
+  font:10px 'DM Mono',monospace;
+  letter-spacing:.16em;
+  cursor:pointer;
+  opacity:.72
 }
 
-.controls {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+.top-nav button:hover,
+.top-nav button:focus-visible{
+  opacity:1;
+  color:#5f536f;
+  outline:none
 }
 
-.next {
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.3s;
+main{
+  flex:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);
+  align-items:center;
+  gap:clamp(24px,5vw,76px);
+  padding:16px 3.5% 35px
 }
 
-.next:hover {
-  opacity: 1;
+.shop{
+  min-width:0;
+  position:relative
 }
 
-.footer {
-  font-size: 10px;
-  opacity: 0.4;
-  display: flex;
-  justify-content: space-between;
+.eyebrow{
+  font:10px 'DM Mono',monospace;
+  letter-spacing:.22em;
+  color:#9a91a8;
+  margin:0 0 22px 4px
 }
 
-.comingSoon {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 64px;
-  letter-spacing: 12px;
-  font-weight: 300;
-  opacity: 0.04;
-  animation: fadePulse 6s infinite ease-in-out;
-  pointer-events: none;
+.stage{
+  height:clamp(360px,53vw,540px);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1100px;
+  overflow:hidden
 }
 
-@keyframes fadePulse {
-  0% { opacity: 0.02; }
-  50% { opacity: 0.08; }
-  100% { opacity: 0.02; }
+.product{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  opacity:0;
+  transform:translateX(45px) rotateY(-12deg) scale(.96);
+  transition:opacity .48s ease,transform .7s cubic-bezier(.2,.7,.2,1);
+  pointer-events:none
 }
 
-.fragranceOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10,8,20,0.65);
-  backdrop-filter: blur(30px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.6s;
+.product.active{
+  opacity:1;
+  transform:translateX(0) rotateY(0) scale(1);
+  pointer-events:auto
 }
 
-.fragranceOverlay.active {
-  opacity: 1;
-  pointer-events: all;
+.product.leaving{
+  opacity:0;
+  transform:translateX(-48px) rotateY(12deg) scale(.96)
 }
 
-.fragranceInner {
-  width: 80%;
-  max-width: 300px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(200,180,255,0.2);
-  text-align: center;
+.object{
+  width:min(70%,340px);
+  aspect-ratio:1;
+  position:relative;
+  display:grid;
+  place-items:center;
+  filter:drop-shadow(0 18px 28px rgba(111,96,137,.16))
 }
 
-.action-btn {
-  font-size: 12px;
-  opacity: 0.8;
-  cursor: pointer;
-  transition: 0.3s;
-  color: #e6dcff;     
-  text-decoration: none;
-  user-select: none;
-  background: none;
-  border: none;
-  padding: 4px 8px;
+.object:before{
+  content:"";
+  position:absolute;
+  inset:5%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(189,176,211,.38),rgba(214,207,224,.12) 58%,transparent 74%);
+  filter:blur(16px)
 }
 
-.action-btn:hover {
-  opacity: 1;
-  color: #cfc1ff;       
+.sigil{
+  position:relative;
+  width:100%;
+  aspect-ratio:1;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 48% 42%,rgba(255,255,255,.86),rgba(222,217,231,.62) 58%,rgba(193,184,209,.38));
+  box-shadow:inset 0 0 26px rgba(255,255,255,.86),0 0 32px rgba(163,148,190,.22);
+  overflow:hidden
+}
+
+.sigil:before,
+.sigil:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(117,103,145,.45);
+  border-radius:50%;
+  inset:8%
+}
+
+.sigil:after{
+  inset:17%;
+  border-color:rgba(155,139,180,.55)
+}
+
+.sigil-art{
+  position:relative;
+  width:72%;
+  height:72%;
+  overflow:visible;
+  fill:none;
+  stroke:#827692;
+  stroke-width:1.35;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 5px rgba(151,129,180,.38))
+}
+
+.sigil-02 .sigil-art{transform:rotate(30deg)}
+.sigil-03 .sigil-art{transform:rotate(-18deg)}
+
+.product-meta{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  padding:0 7%;
+  margin-top:4px
+}
+
+.name{
+  font-size:13px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:500
+}
+
+.price{
+  font:12px 'DM Mono',monospace;
+  color:#81778f
+}
+
+.index{
+  font:10px 'DM Mono',monospace;
+  color:#a49cad;
+  letter-spacing:.15em;
+  margin-top:12px
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin:20px 7% 0
+}
+
+.arrow{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.55);
+  color:#71677f;
+  box-shadow:0 0 20px rgba(160,145,186,.13);
+  font-size:21px;
+  cursor:pointer;
+  transition:transform .2s,background .2s
+}
+
+.arrow:hover{background:rgba(255,255,255,.9)}
+#prev:hover{transform:translateX(-3px)}
+#next:hover{transform:translateX(3px)}
+
+.progress{
+  height:1px;
+  background:rgba(123,111,144,.2);
+  flex:1;
+  position:relative
+}
+
+.progress span{
+  display:block;
+  height:1px;
+  background:#9283a8;
+  width:33.333%;
+  transition:width .4s
+}
+
+.visual{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:420px
+}
+
+.visual-frame{
+  width:min(100%,390px);
+  position:relative;
+  filter:drop-shadow(0 0 30px rgba(157,140,185,.22))
+}
+
+.visual-frame:before{
+  content:"";
+  position:absolute;
+  inset:8% -8%;
+  background:radial-gradient(ellipse,rgba(194,181,216,.35),transparent 70%);
+  filter:blur(25px)
+}
+
+.visual img{
+  display:block;
+  position:relative;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+  mask-image:radial-gradient(ellipse at center,#000 48%,rgba(0,0,0,.92) 68%,transparent 100%)
+}
+
+.visual-label{
+  position:absolute;
+  bottom:-22px;
+  right:2px;
+  font:9px 'DM Mono',monospace;
+  letter-spacing:.2em;
+  color:#9c93a8
+}
+
+/* POPUP WINDOWS */
+
+.window-overlay{
+  position:fixed;
+  inset:0;
+  z-index:40;
+  background:rgba(224,220,232,.28);
+  backdrop-filter:blur(5px);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:9vh 18px 24px
+}
+
+.window-overlay.open{
+  display:flex;
+  animation:overlayIn .22s ease
+}
+
+@keyframes overlayIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.popup{
+  width:min(540px,94vw);
+  max-height:82vh;
+  background:var(--glass);
+  border:1px solid rgba(150,135,176,.3);
+  border-radius:13px;
+  box-shadow:0 22px 70px rgba(91,78,112,.18),inset 0 0 25px rgba(255,255,255,.6);
+  backdrop-filter:blur(24px);
+  overflow:hidden;
+  animation:windowIn .28s ease
+}
+
+@keyframes windowIn{
+  from{transform:translateY(12px) scale(.985);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
+}
+
+.window-bar{
+  height:42px;
+  padding:0 13px 0 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  background:rgba(239,235,245,.72);
+  font:10px 'DM Mono',monospace;
+  letter-spacing:.17em;
+  color:#81778f
+}
+
+.window-actions{
+  display:flex;
+  gap:8px
+}
+
+.window-actions button{
+  width:23px;
+  height:23px;
+  border:1px solid rgba(128,113,151,.2);
+  border-radius:50%;
+  background:rgba(255,255,255,.65);
+  color:#81778f;
+  cursor:pointer;
+  font:13px 'DM Mono',monospace;
+  line-height:1
+}
+
+.window-content{
+  padding:24px;
+  overflow:auto;
+  max-height:calc(82vh - 42px);
+  transition:max-height .25s,padding .25s
+}
+
+.popup.minimized .window-content{display:none}
+.popup.minimized{max-height:42px}
+
+.window-kicker{
+  font:9px 'DM Mono',monospace;
+  letter-spacing:.2em;
+  color:#a097ad;
+  margin:0 0 20px
+}
+
+.about-panel{min-height:230px}
+
+.about-panel h2{
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.1em;
+  margin:0 0 12px;
+  text-transform:uppercase
+}
+
+.about-copy{
+  font-size:12px;
+  line-height:1.9;
+  color:#777183
+}
+
+.about-reference{
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+  font:10px/1.8 'DM Mono',monospace;
+  color:#8d849b
+}
+
+.about-reference h3{
+  font:9px 'DM Mono',monospace;
+  letter-spacing:.18em;
+  font-weight:400;
+  margin:0 0 10px;
+  color:#a097ad
+}
+
+.about-reference div{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:10px
+}
+
+.about-reference span{color:#716a7d}
+
+.archive-container{
+  border:1px solid rgba(150,135,176,.2);
+  border-radius:10px;
+  padding:18px;
+  background:rgba(255,255,255,.3);
+  max-height:55vh;
+  overflow:hidden;
+  position:relative
+}
+
+.archive-inner{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  animation:scrollLoop 35s linear infinite
+}
+
+.archive-container:hover .archive-inner{
+  animation-play-state:paused
+}
+
+.archive-fragment{
+  font:11px/1.8 'DM Mono',monospace;
+  color:#716a7d;
+  white-space:pre-wrap;
+  opacity:.9
+}
+
+@keyframes scrollLoop{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+/* CONTACT FORM */
+
+.contact-form{
+  display:grid;
+  gap:14px
+}
+
+.contact-form label{
+  font:9px 'DM Mono',monospace;
+  letter-spacing:.16em;
+  color:#8d849b
+}
+
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  margin-top:7px;
+  padding:11px 12px;
+  border:1px solid rgba(140,125,164,.22);
+  border-radius:7px;
+  background:rgba(255,255,255,.55);
+  color:var(--ink);
+  font:12px Manrope,Arial,sans-serif;
+  outline:none
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:#a99abb;
+  box-shadow:0 0 0 3px rgba(174,157,204,.12)
+}
+
+.contact-form textarea{
+  min-height:115px;
+  resize:vertical
+}
+
+.submit-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px
+}
+
+.submit-btn{
+  border:1px solid rgba(140,125,164,.28);
+  border-radius:20px;
+  padding:10px 17px;
+  background:rgba(255,255,255,.55);
+  color:#71677f;
+  font:10px 'DM Mono',monospace;
+  letter-spacing:.13em;
+  cursor:pointer
+}
+
+.submit-btn:hover{background:#fff}
+
+.form-note{
+  font:9px/1.6 'DM Mono',monospace;
+  color:#a097ad
+}
+
+/* RESPONSIVE */
+
+@media(max-width:760px){
+  .shell{padding-top:12px}
+  header{height:90px}
+  .logo{height:125px;max-width:52vw}
+
+  .corner{
+    font-size:8px;
+    top:auto;
+    bottom:4px;
+    right:0;
+    transform:none
+  }
+
+  .top-nav{
+    top:13px;
+    left:4vw;
+    gap:13px
+  }
+
+  .top-nav button{font-size:9px}
+
+  main{
+    grid-template-columns:1fr;
+    gap:0;
+    padding:10px 0 26px
+  }
+
+  .shop{order:1}
+  .visual{order:2;min-height:220px;margin-top:12px}
+  .visual-frame{width:min(54vw,230px)}
+  .stage{height:390px}
+  .object{width:min(64%,300px)}
+  .product-meta{padding:0 4%}
+  .controls{margin-left:4%;margin-right:4%}
+  .window-overlay{padding-top:12vh}
+  .window-content{padding:19px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *:before,
+  *:after{
+    animation:none!important;
+    transition:none!important
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<nav class="top-nav" aria-label="Main navigation">
+  <button type="button" data-window="contact">CONTACT</button>
+  <button type="button" data-window="about">ABOUT</button>
+  <button type="button" data-window="archive">ARCHIVE</button>
+</nav>
 
-  <div class="banner">
-    <h1>LAC</h1>
-  </div>
+<div class="shell">
 
-  <div class="definition">
-    <span>liminal → in-between / digital / soft space</span>
-    <span>abyss → depth / danger / demonic undertone</span>
-    <span>caress → intimacy / lingerie / softness</span>
-    <span>
-      <a href="https://axaxayacatl.github.io/liminalabysscaress/">home</a> x 
-      <a href="https://axaxayacatl.github.io/liminalabysscaress/newsletter">newsletter</a>
-    </span>
-  </div>
+  <header>
+    <img
+      class="logo"
+      src="https://raw.githubusercontent.com/axaxayacatl/liminalabysscaress/refs/heads/main/lac_logo.png"
+      alt="Custom logo"
+    >
+    <div class="corner">ETH / OBJECTS<br>ONLINE</div>
+  </header>
 
-  <div class="terminal">
+  <main>
 
-    <div class="product active">
-      <h2>01 / origin</h2>
-      <div class="meta">
-        SYNTHESIS COORDINATOR : Axayacatl<br><br>
-        LAC exists as a liminal construct between fashion, system, and ritual object.<br><br>
-        It is not a traditional brand but a controlled interface where intimacy is engineered and distributed through form.<br><br>
-        The work is informed by the cybernetic thought of Donna Haraway, where bodies, machines, and identity converge into hybrid systems.
+    <section class="shop" aria-label="Product showcase">
+
+      <p class="eyebrow">COLLECTION / 001</p>
+
+      <div class="stage" id="stage">
+
+        <article class="product active">
+          <div class="object">
+            <div class="sigil sigil-01" role="img" aria-label="Circular geometric sigil placeholder">
+              <svg class="sigil-art" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="34"/>
+                <circle cx="50" cy="50" r="23"/>
+                <path d="M50 8 58 38 88 50 58 62 50 92 42 62 12 50 42 38Z"/>
+                <path d="M50 22 50 78M22 50 78 50M30 30 70 70M70 30 30 70"/>
+                <circle cx="50" cy="50" r="5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-meta">
+            <span class="name">Lattice Bra</span>
+            <span class="price">0.0713 ETH</span>
+          </div>
+          <div class="index">01 / 03</div>
+        </article>
+
+        <article class="product">
+          <div class="object">
+            <div class="sigil sigil-02" role="img" aria-label="Circular geometric sigil placeholder">
+              <svg class="sigil-art" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="35"/>
+                <path d="M50 12 82 31 82 69 50 88 18 69 18 31Z"/>
+                <path d="M50 12 50 88M18 31 82 69M82 31 18 69M18 50 82 50"/>
+                <path d="M50 27 70 50 50 73 30 50Z"/>
+                <circle cx="50" cy="50" r="7"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-meta">
+            <span class="name">Corset Generator</span>
+            <span class="price">0.1427 ETH</span>
+          </div>
+          <div class="index">02 / 03</div>
+        </article>
+
+        <article class="product">
+          <div class="object">
+            <div class="sigil sigil-03" role="img" aria-label="Circular geometric sigil placeholder">
+              <svg class="sigil-art" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="35"/>
+                <circle cx="50" cy="50" r="27"/>
+                <path d="M50 14 58 39 84 50 58 61 50 86 42 61 16 50 42 39Z"/>
+                <path d="M50 24 74 50 50 76 26 50Z"/>
+                <path d="M50 7V93M7 50H93"/>
+                <circle cx="50" cy="50" r="4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-meta">
+            <span class="name">Wet Mesh</span>
+            <span class="price">0.0476 ETH</span>
+          </div>
+          <div class="index">03 / 03</div>
+        </article>
+
       </div>
+
       <div class="controls">
-        <div class="next" onclick="nextProduct()">next →</div>
+        <button class="arrow" id="prev" type="button" aria-label="Previous product">←</button>
+        <div class="progress"><span id="progress"></span></div>
+        <button class="arrow" id="next" type="button" aria-label="Next product">→</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>02 / structure</h2>
-      <div class="meta">
-        garments are treated as frameworks rather than clothing.<br><br>
-        each piece operates as a lattice, a containment system for the body, balancing exposure and restriction within a digital logic.<br><br>
-        designed for online game environments and emerging 3D printed fashion houses, the objects exist simultaneously as asset and artifact.
+    </section>
+
+    <aside class="visual">
+      <div class="visual-frame">
+        <img
+          src="https://raw.githubusercontent.com/axaxayacatl/liminalabysscaress/refs/heads/main/axayacatl.gif"
+          alt="Animated Axayacatl visual"
+        >
+        <span class="visual-label">LIVE SIGNAL / 001</span>
       </div>
-      <div class="controls">
-        <div class="next" onclick="nextProduct()">next →</div>
-      </div>
-    </div>
+    </aside>
 
-    <div class="product">
-      <h2>03 / philosophy</h2>
-      <div class="meta">
-        softness is not passive, it is engineered.<br>
-        danger is aesthetic, but also structural.<br><br>
-        LAC explores the tension between control and surrender through synthetic intimacy.<br><br>
-        it draws from distributed cultures of open invention, decentralized studios, anonymous fabrication, and tool making as a shared ritual practice.
-      </div>
-      <div class="controls">
-        <div class="next" onclick="nextProduct()">next →</div>
-      </div>
-    </div>
-
-    <div class="product">
-      <h2>04 / access</h2>
-      <div class="meta">
-        distribution is intentionally limited.<br><br>
-        objects, files, and systems are released in controlled intervals.<br>
-        access is not guaranteed, it is encountered.<br><br>
-        positioned between digital economies and physical production, LAC interfaces with both virtual worlds and fabrication networks.
-      </div>
-      <div class="controls">
-        <div class="next" onclick="nextProduct()">next →</div>
-      </div>
-    </div>
-
-    <div style="display:flex; flex-direction:column; gap:10px; margin-top:30px;">
-      <div class="action-btn" onclick="openFragrance()">fragrance →</div>
-      <!-- Fixed archive button: removed <a>, use JS for navigation -->
-      <div class="action-btn" onclick="openArchive()">archive →</div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <span>home</span>
-    <span>archive</span>
-    <span onclick="openFragrance()">fragrance</span>
-    <span>info</span>
-  </div>
-
-  <div class="comingSoon">ABOUT</div>
-
+  </main>
 </div>
 
-<div class="fragranceOverlay" id="fragranceOverlay" onclick="closeFragrance()">
-  <div class="fragranceInner" onclick="event.stopPropagation()">
-    <div id="fragranceStage">initiate</div>
-  </div>
+<!-- CONTACT WINDOW -->
+
+<div class="window-overlay" id="contact-overlay" aria-hidden="true">
+
+  <section class="popup" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+
+    <div class="window-bar">
+      <span id="contact-title">CONTACT / SUBMISSION</span>
+
+      <div class="window-actions">
+        <button type="button" data-minimize aria-label="Minimize window">−</button>
+        <button type="button" data-close aria-label="Close window">×</button>
+      </div>
+    </div>
+
+    <div class="window-content">
+
+      <p class="window-kicker">DIRECT TRANSMISSION / 001</p>
+
+      <form class="contact-form" id="contact-form">
+
+        <label>
+          NAME
+          <input name="name" autocomplete="name" required placeholder="Your name">
+        </label>
+
+        <label>
+          EMAIL
+          <input name="email" type="email" autocomplete="email" required placeholder="your@email.com">
+        </label>
+
+        <label>
+          SUBJECT
+          <input name="subject" required placeholder="Subject">
+        </label>
+
+        <label>
+          MESSAGE
+          <textarea name="message" required placeholder="Write your message..."></textarea>
+        </label>
+
+        <div class="submit-row">
+          <span class="form-note">SUBMISSION OPENS YOUR EMAIL CLIENT</span>
+          <button class="submit-btn" type="submit">SEND MESSAGE ↗</button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT WINDOW -->
+
+<div class="window-overlay" id="about-overlay" aria-hidden="true">
+
+  <section class="popup" role="dialog" aria-modal="true" aria-labelledby="about-title">
+
+    <div class="window-bar">
+      <span id="about-title">ABOUT / LAC</span>
+
+      <div class="window-actions">
+        <button type="button" data-minimize aria-label="Minimize window">−</button>
+        <button type="button" data-close aria-label="Close window">×</button>
+      </div>
+    </div>
+
+    <div class="window-content">
+
+      <p class="window-kicker">CYBORGISM / HISTORICAL REFERENCE</p>
+
+      <div class="about-panel">
+
+        <article class="about-slide">
+
+          <h2>CYBORGISM / A BRIEF HISTORY</h2>
+
+          <div class="about-copy">
+
+            Cyborgism emerges from the historical intersection of cybernetics, biology, engineering, and technological intervention in the human organism.<br><br>
+
+            Its foundations reach into the mid-twentieth century, when cybernetics began examining communication, feedback, and control across living organisms and mechanical systems. Norbert Wiener, Warren McCulloch, and Walter Pitts helped establish the scientific language through which biological and computational processes could be understood in relation to one another.<br><br>
+
+            In 1960, Manfred E. Clynes and Nathan S. Kline introduced the term <em>cyborg</em> to describe an organism technologically adapted to operate in environments beyond its natural physiological limits. This engineering concept developed alongside advances in prosthetics, artificial organs, biomedical instrumentation, neural research, and human–machine interfaces.<br><br>
+
+            Cyborgism subsequently expanded into artistic, philosophical, political, and cultural inquiry. Cybernetic art explored feedback and interaction as creative systems. Science fiction imagined altered bodies and technological identities. Feminist technoscience and posthuman theory questioned the boundaries separating human, machine, nature, and culture.<br><br>
+
+            Its historical references include cybernetics, aerospace research, medical technology, cybernetic sculpture, interactive systems, posthumanism, and the theoretical work of Donna Haraway, N. Katherine Hayles, Anne Balsamo, and Chris Hables Gray.<br><br>
+
+            Cyborgism is not a single aesthetic or doctrine. It is an evolving historical field concerned with the technological transformation of organisms, the integration of artificial systems into biological life, and the changing definition of the human.
+
+          </div>
+
+          <div class="about-reference">
+
+            <h3>REFERENCE INDEX</h3>
+
+            <div>1943 <span>McCulloch &amp; Pitts / Neural Networks</span></div>
+            <div>1948 <span>Norbert Wiener / Cybernetics</span></div>
+            <div>1960 <span>Clynes &amp; Kline / Cyborg</span></div>
+            <div>1985 <span>Donna Haraway / A Cyborg Manifesto</span></div>
+            <div>1995 <span>The Cyborg Handbook</span></div>
+            <div>1996 <span>Anne Balsamo / Technologies of the Gendered Body</span></div>
+            <div>1999 <span>N. Katherine Hayles / How We Became Posthuman</span></div>
+
+          </div>
+
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ARCHIVE WINDOW -->
+
+<div class="window-overlay" id="archive-overlay" aria-hidden="true">
+
+  <section class="popup" role="dialog" aria-modal="true" aria-labelledby="archive-title">
+
+    <div class="window-bar">
+      <span id="archive-title">ARCHIVE / FRAGMENTS</span>
+
+      <div class="window-actions">
+        <button type="button" data-minimize aria-label="Minimize window">−</button>
+        <button type="button" data-close aria-label="Close window">×</button>
+      </div>
+    </div>
+
+    <div class="window-content">
+
+      <p class="window-kicker">DIGITAL TRANSCRIPTS / FRAGMENTED RITUALS / SENSORY ARTIFACTS</p>
+
+      <div class="archive-container">
+        <div class="archive-inner" id="archive-inner">
+
+          <div class="archive-fragment">INITIATE caress_sequence_v2
+input: skin_temperature ~34.7°C
+WAIT 0.3s
+pulse: synthetic rhythm
+ABORT if signal != accepted</div>
+
+          <div class="archive-fragment">LOAD interaction_loop_03
+sensor: tactile membrane
+adjust: softness +0.2
+RECORD: ephemeral feedback
+TERMINATE sequence</div>
+
+          <div class="archive-fragment">BEGIN liminal_encounter
+touch: digital lattice
+delay: 0.5s
+repeat until: threshold_exceeded
+LOG: ritual residue</div>
+
+          <div class="archive-fragment">SENSORY_FEED:
+top_note: lilac-stasis
+heart_resonance: synthetic dermis
+base_signature: warm polymer / soft void
+OUTPUT: ephemeral trace</div>
+
+          <div class="archive-fragment">SCENT_MATRIX: fragment
+volatile: 0.72
+residual: 0.31
+perceived: intangible
+ARCHIVE: sensory echo</div>
+
+          <div class="archive-fragment">AUDIO_WAVE:
+frequency: 432Hz
+amplitude: subtle
+texture: granular
+recorded: memory trace</div>
+
+          <div class="archive-fragment">VIBRATION_SCAN:
+pattern: irregular
+amplitude: low
+interpretation: subconscious response
+LOG: neural imprint</div>
+
+          <div class="archive-fragment">TEMPORAL_MARKER:
+sequence: fragmented
+timestamp: 2026-05-17T14:30
+note: ephemeral resonance</div>
+
+          <div class="archive-fragment">LIGHT_IMPRINT:
+wavelength: 520nm
+intensity: faint
+record: visual echo</div>
+
+          <div class="archive-fragment">TACTILE_ARCHIVE:
+material: synthetic silk
+interaction: passive touch
+trace: lingering</div>
+
+          <div class="archive-fragment">NEURAL_FEEDBACK:
+pattern: delta-wave
+amplitude: subtle
+integration: sensory loop</div>
+
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
-let index = 0;
-const products = document.querySelectorAll(".product");
+(() => {
 
-function nextProduct() {
-  products[index].classList.remove("active");
-  index = (index + 1) % products.length;
-  products[index].classList.add("active");
-}
+  // PRODUCT CAROUSEL
 
-let fragranceTimeouts = [];
-function openFragrance() {
-  const overlay = document.getElementById("fragranceOverlay");
-  overlay.classList.add("active");
-  fadeText("initializing...");
+  const items = [...document.querySelectorAll('.product')];
+  const progress = document.getElementById('progress');
 
-  fragranceTimeouts.push(setTimeout(() => fadeText("top note: sterile lilac"), 1500));
-  fragranceTimeouts.push(setTimeout(() => fadeText("heart: synthetic skin"), 3500));
-  fragranceTimeouts.push(setTimeout(() => fadeText("base: warm plastic / soft void"), 5500));
-}
+  let current = 0;
+  let locked = false;
 
-function closeFragrance() {
-  const overlay = document.getElementById("fragranceOverlay");
-  overlay.classList.remove("active");
-  fragranceTimeouts.forEach(t => clearTimeout(t));
-  fragranceTimeouts = [];
-  setTimeout(() => fadeText("initiate"), 600);
-}
+  function show(next) {
 
-function fadeText(newText) {
-  const text = document.getElementById("fragranceStage");
-  text.style.opacity = 0;
-  setTimeout(() => {
-    text.innerHTML = newText;
-    text.style.opacity = 1;
-  }, 300);
-}
+    if (locked) return;
 
-function openArchive() {
-  window.location.href = "https://axaxayacatl.github.io/liminalabysscaress/archive";
-}
+    locked = true;
+
+    const old = items[current];
+    const target = (next + items.length) % items.length;
+
+    if (target === current) {
+      locked = false;
+      return;
+    }
+
+    old.classList.remove('active');
+    old.classList.add('leaving');
+
+    items[target].classList.remove('leaving');
+    items[target].classList.add('active');
+
+    current = target;
+
+    progress.style.width =
+      ((current + 1) / items.length * 100) + '%';
+
+    setTimeout(() => {
+      old.classList.remove('leaving');
+      locked = false;
+    }, 720);
+  }
+
+  document.getElementById('next').addEventListener('click', () => {
+    show(current + 1);
+  });
+
+  document.getElementById('prev').addEventListener('click', () => {
+    show(current - 1);
+  });
+
+
+  // KEYBOARD NAVIGATION
+
+  document.addEventListener('keydown', e => {
+
+    if (
+      e.key === 'ArrowRight' &&
+      !e.target.closest('input,textarea')
+    ) {
+      show(current + 1);
+    }
+
+    if (
+      e.key === 'ArrowLeft' &&
+      !e.target.closest('input,textarea')
+    ) {
+      show(current - 1);
+    }
+
+    if (e.key === 'Escape') {
+      closeAll();
+    }
+
+  });
+
+
+  // MOBILE SWIPE
+
+  let startX = 0;
+
+  const stage = document.getElementById('stage');
+
+  stage.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].clientX;
+  }, {passive:true});
+
+  stage.addEventListener('touchend', e => {
+
+    const dx = e.changedTouches[0].clientX - startX;
+
+    if (Math.abs(dx) > 45) {
+      show(current + (dx < 0 ? 1 : -1));
+    }
+
+  }, {passive:true});
+
+
+  // POPUP WINDOWS
+
+  const overlays = [
+    ...document.querySelectorAll('.window-overlay')
+  ];
+
+  function closeAll() {
+
+    overlays.forEach(overlay => {
+
+      overlay.classList.remove('open');
+
+      overlay.setAttribute('aria-hidden','true');
+
+      overlay.querySelector('.popup')
+        .classList.remove('minimized');
+
+    });
+
+  }
+
+  function openWindow(name) {
+
+    closeAll();
+
+    const overlay = document.getElementById(name + '-overlay');
+
+    overlay.classList.add('open');
+
+    overlay.setAttribute('aria-hidden','false');
+
+  }
+
+  document.querySelectorAll('[data-window]').forEach(button => {
+
+    button.addEventListener('click', () => {
+      openWindow(button.dataset.window);
+    });
+
+  });
+
+  overlays.forEach(overlay => {
+
+    overlay.addEventListener('click', e => {
+
+      if (e.target === overlay) {
+        closeAll();
+      }
+
+    });
+
+    overlay.querySelector('[data-close]')
+      .addEventListener('click', closeAll);
+
+    overlay.querySelector('[data-minimize]')
+      .addEventListener('click', () => {
+
+        overlay.querySelector('.popup')
+          .classList.toggle('minimized');
+
+      });
+
+  });
+
+
+  // DUPLICATE ARCHIVE FOR CONTINUOUS SCROLL
+
+  const archiveInner = document.getElementById('archive-inner');
+
+  archiveInner.innerHTML += archiveInner.innerHTML;
+
+
+  // CONTACT FORM
+
+  const CONTACT_EMAIL = 'axayacatl.moz@Proton.me';
+
+  document.getElementById('contact-form')
+    .addEventListener('submit', e => {
+
+      e.preventDefault();
+
+      const data = new FormData(e.currentTarget);
+
+      const subject = encodeURIComponent(data.get('subject'));
+
+      const body = encodeURIComponent(
+        `Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`
+      );
+
+      window.location.href =
+        `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
+    });
+
+})();
 </script>
 
 </body>
